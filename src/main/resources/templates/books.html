@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -7,5 +7,27 @@
 <body>
 <a href="/">Home</a> <br>
 Books Page
+
+<table border="1">
+    <tr>
+        <th>id</th>
+        <th>title</th>
+        <th>author_name</th>
+        <th>price</th>
+        <th>created Date</th>
+        <th>user name</th>
+        <th>user surname</th>
+    </tr>
+    <tr th:each="book : ${books}">
+      <td> <a th:href="@{/books/{id}(id=${book.id})}" href="#"><span th:text="${book.id}">id</span></a></td>
+        <td th:text="${book.title}"></td>
+        <td th:text="${book.authorName}"></td>
+        <td th:text="${book.price}"></td>
+        <td th:text="${book.createdDate}"></td>
+        <td th:text="${book.user.name}"></td>
+        <td th:text="${book.user.surname}"></td>
+
+    </tr>
+</table>
 </body>
 </html>
