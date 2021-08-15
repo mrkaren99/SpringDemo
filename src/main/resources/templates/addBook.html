@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="/">Home</a> <br>
+Add Book Page | <a href="/books">book page</a>
+
+<form action="/books/add" method="post" enctype="multipart/form-data">
+    <input type="text" name="title" placeholder="title"> <br>
+    <input type="text" name="authorName" placeholder="authorName"> <br>
+    <input type="number" name="price" placeholder="price"> <br>
+    Image: <input type="file" name="picture" > <br>
+    User: <select name="user.id">
+        <option th:each="user: ${users}" th:text="${user.name} + ' ' + ${user.surname}" th:value="${user.id}"></option>
+    </select>
+    hashtags:
+    <div th:each="hashtag: ${hashtags}">
+        <span th:text="${hashtag.name}"> </span>
+        <input type="checkbox"  name="hashtagList" th:value="${hashtag.name}">
+    </div>
+
+
+    <input  type="submit" value="add book">
+</form>
+</body>
+</html>

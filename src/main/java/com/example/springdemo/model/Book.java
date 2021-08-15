@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -26,5 +27,10 @@ public class Book {
     private String picUrl;
     @ManyToOne
     private User user;
+    @ManyToMany
+    private List<Hashtag> hashtags;
+
+    @Transient
+    private List<String> hashtagList;
 
 }

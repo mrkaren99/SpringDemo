@@ -6,7 +6,7 @@
 </head>
 <body>
 <a href="/">Home</a> <br>
-Books Page
+Books Page | <a href="/books/add">Add book</a>
 
 <table border="1">
     <tr>
@@ -17,6 +17,8 @@ Books Page
         <th>created Date</th>
         <th>user name</th>
         <th>user surname</th>
+        <th>Hashtags</th>
+        <th>picture</th>
     </tr>
     <tr th:each="book : ${books}">
       <td> <a th:href="@{/books/{id}(id=${book.id})}" href="#"><span th:text="${book.id}">id</span></a></td>
@@ -26,6 +28,12 @@ Books Page
         <td th:text="${book.createdDate}"></td>
         <td th:text="${book.user.name}"></td>
         <td th:text="${book.user.surname}"></td>
+        <td >
+            <div th:each="hastag: ${book.hashtags}">
+                <span th:text="${hastag.name} + ' '" th:text></span>
+            </div>
+            </td>
+        <td ><a th:if="${book.picUrl != null}" th:href="@{/image(picUrl=${book.picUrl})}"><img width="100"  th:src="@{/image(picUrl=${book.picUrl})}"></a> </td>
 
     </tr>
 </table>
