@@ -9,11 +9,15 @@
 
 Add Users Page | <a href="/users">Users</a> <br>
 
-<form action="/addUser" method="post">
+<form action="/users/add" method="post">
     <input type="text" name="name" placeholder="name"> <br>
     <input type="text" name="surname" placeholder="surname"><br>
     <input type="text" name="email" placeholder="email"><br>
     <input type="text" name="password" placeholder="password"><br>
+    UserType: <select name="userType">
+    <option value="USER">USER</option>
+    <option value="ADMIN">ADMIN</option>
+</select>
     <input type="submit" value="Add">
 </form>
 

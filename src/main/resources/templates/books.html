@@ -5,7 +5,9 @@
     <title>Title</title>
 </head>
 <body>
+<a href="/logout">Logout</a> <br>
 <a href="/">Home</a> <br>
+
 Books Page | <a href="/books/add">Add book</a>
 
 <table border="1">
@@ -30,7 +32,7 @@ Books Page | <a href="/books/add">Add book</a>
         <td th:text="${book.user.surname}"></td>
         <td >
             <div th:each="hastag: ${book.hashtags}">
-                <span th:text="${hastag.name} + ' '" th:text></span>
+                <span th:text="${hastag.name} + ' '"></span>
             </div>
             </td>
         <td ><a th:if="${book.picUrl != null}" th:href="@{/image(picUrl=${book.picUrl})}"><img width="100"  th:src="@{/image(picUrl=${book.picUrl})}"></a> </td>

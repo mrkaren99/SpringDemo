@@ -13,9 +13,9 @@ Add Book Page | <a href="/books">book page</a>
     <input type="text" name="authorName" placeholder="authorName"> <br>
     <input type="number" name="price" placeholder="price"> <br>
     Image: <input type="file" name="picture" > <br>
-    User: <select name="user.id">
-        <option th:each="user: ${users}" th:text="${user.name} + ' ' + ${user.surname}" th:value="${user.id}"></option>
-    </select>
+<!--    User: <select name="user.id">-->
+<!--        <option th:each="user: ${users}" th:text="${user.name} + ' ' + ${user.surname}" th:value="${user.id}"></option>-->
+<!--    </select>-->
     hashtags:
     <div th:each="hashtag: ${hashtags}">
         <span th:text="${hashtag.name}"> </span>

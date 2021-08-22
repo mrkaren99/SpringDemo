@@ -22,6 +22,8 @@ public class User {
     private String surname;
     private String email;
     private String password;
+    @Enumerated(value = EnumType.STRING)
+    private UserType userType;
 
 
 }

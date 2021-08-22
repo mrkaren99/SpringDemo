@@ -6,8 +6,12 @@ import com.example.springdemo.model.User;
 import com.example.springdemo.repository.BookRepository;
 import com.example.springdemo.repository.HashtagRepository;
 import com.example.springdemo.repository.UserRepository;
+import com.example.springdemo.security.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +56,13 @@ public class BookController {
 
     @PostMapping("/books/add")
     public String addBook(@ModelAttribute Book book,
-                          @RequestParam("picture") MultipartFile multipartFile) throws IOException {
+                          @RequestParam("picture") MultipartFile multipartFile,
+                          @AuthenticationPrincipal CurrentUser currentUser
+    ) throws IOException {
+
+        book.setUser(currentUser.getUser());
+
+
         String picUrl = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
         multipartFile.transferTo(new File(uploadDir + File.separator + picUrl));
 
@@ -66,6 +76,8 @@ public class BookController {
 
         book.setPicUrl(picUrl);
         book.setCreatedDate(new Date());
+
+
         bookRepository.save(book);
         return "redirect:/books";
     }
