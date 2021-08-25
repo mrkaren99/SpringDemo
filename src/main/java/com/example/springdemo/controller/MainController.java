@@ -34,6 +34,11 @@ public class MainController {
         return IOUtils.toByteArray(in);
     }
 
+    @GetMapping("/403")
+    public String forbidden() {
+        return "403";
+    }
+
 
 
 }

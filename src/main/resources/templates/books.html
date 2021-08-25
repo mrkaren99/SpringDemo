@@ -5,8 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<a href="/logout">Logout</a> <br>
-<a href="/">Home</a> <br>
+<div th:include="fragments/header::header"></div>
 
 Books Page | <a href="/books/add">Add book</a>
 
@@ -35,7 +34,7 @@ Books Page | <a href="/books/add">Add book</a>
                 <span th:text="${hastag.name} + ' '"></span>
             </div>
             </td>
-        <td ><a th:if="${book.picUrl != null}" th:href="@{/image(picUrl=${book.picUrl})}"><img width="100"  th:src="@{/image(picUrl=${book.picUrl})}"></a> </td>
+        <td ><a th:if="${book.picUrl != null && book.picUrl != ''}" th:href="@{/image(picUrl=${book.picUrl})}"><img width="100"  th:src="@{/image(picUrl=${book.picUrl})}"></a> </td>
 
     </tr>
 </table>

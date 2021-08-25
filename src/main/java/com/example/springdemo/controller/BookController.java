@@ -1,56 +1,42 @@
 package com.example.springdemo.controller;
 
 import com.example.springdemo.model.Book;
-import com.example.springdemo.model.Hashtag;
 import com.example.springdemo.model.User;
-import com.example.springdemo.repository.BookRepository;
-import com.example.springdemo.repository.HashtagRepository;
-import com.example.springdemo.repository.UserRepository;
 import com.example.springdemo.security.CurrentUser;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
+import com.example.springdemo.service.HashtagService;
+import com.example.springdemo.service.UserService;
+import com.example.springdemo.service.impl.BookServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
+@RequiredArgsConstructor
 public class BookController {
 
-    @Autowired
-    private BookRepository bookRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private HashtagRepository hashtagRepository;
-
-    @Value("${upload.dir}")
-    private String uploadDir;
+    private final BookServiceImpl bookService;
+    private final UserService userService;
+    private final HashtagService hashtagService;
 
     @GetMapping("/books")
     public String books(ModelMap modelMap) {
-        List<Book> all = bookRepository.findAll();
+        List<Book> all = bookService.findAllBooks();
         modelMap.addAttribute("books", all);
         return "books";
     }
 
     @GetMapping("/books/add")
     public String addBookPage(ModelMap modelMap) {
-        List<User> all = userRepository.findAll();
+        List<User> all = userService.findAllUsers();
         modelMap.addAttribute("users", all);
-        modelMap.addAttribute("hashtags", hashtagRepository.findAll());
+        modelMap.addAttribute("hashtags", hashtagService.findAllHashtags());
         return "addBook";
     }
 
@@ -59,32 +45,13 @@ public class BookController {
                           @RequestParam("picture") MultipartFile multipartFile,
                           @AuthenticationPrincipal CurrentUser currentUser
     ) throws IOException {
-
-        book.setUser(currentUser.getUser());
-
-
-        String picUrl = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
-        multipartFile.transferTo(new File(uploadDir + File.separator + picUrl));
-
-        List<String> hashtagList = book.getHashtagList();
-        List<Hashtag> hashtags = new ArrayList<>();
-        for (String s : hashtagList) {
-            Hashtag byName = hashtagRepository.findByName(s);
-            hashtags.add(byName);
-        }
-        book.setHashtags(hashtags);
-
-        book.setPicUrl(picUrl);
-        book.setCreatedDate(new Date());
-
-
-        bookRepository.save(book);
+        bookService.addBook(book, multipartFile, currentUser);
         return "redirect:/books";
     }
 
     @GetMapping("/books/{id}")
     public String singleBook(@PathVariable("id") int id, ModelMap modelMap) {
-        Optional<Book> book = bookRepository.findById(id);
+        Optional<Book> book = bookService.findBookById(id);
         if (!book.isPresent()) {
             return "redirect:/";
         }
