@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<a href="/users">Users</a> | <a href="/books">Books</a>
+<div th:include="/fragments/header:: lang"></div>
+<a th:text="#{home.menu.user.page}" href="/users">Users</a> | <a th:text="#{home.menu.book.page}" href="/books">Books</a>
 </body>
 </html>

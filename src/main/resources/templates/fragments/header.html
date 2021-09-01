@@ -6,9 +6,15 @@
 </head>
 <body>
 <div th:fragment="header">
-    Welcome <span th:text="${currentUser.name}"></span>,
+    <div th:include="/fragments/header:: lang"></div>
+    <span th:text="#{header.welcome}"></span> <span th:text="${currentUser.name}"></span>,
     <a href="/logout">Logout</a> <br>
     <a href="/">Home</a> <br>
+</div>
+<div th:fragment="lang">
+    <a href="?lang=hy">ARM</a> |
+    <a href="?lang=ru">RU</a> |
+    <a href="?lang=en">ENG</a>
 </div>
 </body>
 </html>
