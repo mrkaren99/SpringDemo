@@ -7,6 +7,7 @@ import com.example.springdemo.service.HashtagService;
 import com.example.springdemo.service.UserService;
 import com.example.springdemo.service.impl.BookServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,6 +20,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class BookController {
 
     private final BookServiceImpl bookService;
@@ -26,9 +28,10 @@ public class BookController {
     private final HashtagService hashtagService;
 
     @GetMapping("/books")
-    public String books(ModelMap modelMap) {
+    public String books(ModelMap modelMap, @AuthenticationPrincipal CurrentUser currentUser) {
         List<Book> all = bookService.findAllBooks();
         modelMap.addAttribute("books", all);
+        log.info("User with {} username opened books page, book.size = {}", currentUser.getUser().getEmail(), all.size());
         return "books";
     }
 
