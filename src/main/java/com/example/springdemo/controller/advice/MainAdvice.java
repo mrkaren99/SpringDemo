@@ -3,7 +3,6 @@ package com.example.springdemo.controller.advice;
 import com.example.springdemo.model.User;
 import com.example.springdemo.security.CurrentUser;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 

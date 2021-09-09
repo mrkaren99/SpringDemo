@@ -1,10 +1,9 @@
 package com.example.springdemo.controller;
 
 import com.example.springdemo.model.User;
-import com.example.springdemo.security.CurrentUser;
+import com.example.springdemo.service.MailService;
 import com.example.springdemo.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +17,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final MailService mailService;
 
     @GetMapping("/users")
     public String users(ModelMap modelMap) {
@@ -33,7 +33,10 @@ public class UserController {
 
     @PostMapping("/users/add")
     public String addUserPost(@ModelAttribute User user){
+
         userService.addUser(user);
+        mailService.send(user.getEmail(), "Welcome",
+                "Dear "+ user.getName() + ", You have successfully registered to our web site!" );
         return "redirect:/users";
     }
 

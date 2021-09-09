@@ -12,7 +12,7 @@ public interface BookService {
 
     List<Book> findAllBooks();
 
-    void addBook(Book book, MultipartFile multipartFile, CurrentUser currentUser) throws IOException;
+    void addBook(Book book, MultipartFile multipartFile, CurrentUser currentUser);
 
     Optional<Book> findBookById(int id);
 }
