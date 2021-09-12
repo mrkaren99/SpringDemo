@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -24,6 +25,9 @@ public class User {
     private String password;
     @Enumerated(value = EnumType.STRING)
     private UserType userType;
+
+    private boolean isEmailVerified;
+    private UUID token;
 
     private String profilePic;
 

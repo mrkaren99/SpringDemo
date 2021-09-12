@@ -9,8 +9,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 @RequiredArgsConstructor
@@ -32,12 +34,20 @@ public class UserController {
     }
 
     @PostMapping("/users/add")
-    public String addUserPost(@ModelAttribute User user){
-
-        userService.addUser(user);
-        mailService.send(user.getEmail(), "Welcome",
-                "Dear "+ user.getName() + ", You have successfully registered to our web site!" );
+    public String addUserPost(@ModelAttribute User user, Locale locale) {
+        User byEmail = userService.findByEmail(user.getEmail());
+        if (byEmail != null) {
+            return "redirect:/users";
+        }
+        userService.addUser(user, locale);
         return "redirect:/users";
+    }
+
+    @GetMapping("/verifyEmail")
+    public String verifyEmail(@RequestParam("email") String email,
+                              @RequestParam("token") String token) {
+        userService.verifyUser(email, token);
+        return "emailVerifySuccess";
     }
 
 

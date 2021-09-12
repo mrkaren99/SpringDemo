@@ -21,6 +21,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String title;
+
     private String authorName;
     private double price;
     private Date createdDate;
