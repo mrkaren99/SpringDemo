@@ -27,6 +27,9 @@ public class UserServiceImpl implements UserService {
     @Value("${site.url}")
     private String siteUrl;
 
+    @Value("${spring.mail.template.path}")
+    private String templatePath;
+
     @Override
     public List<User> findAllUsers() {
         return userRepository.findAll();
@@ -57,7 +60,7 @@ public class UserServiceImpl implements UserService {
 //                "Hi " + user.getName() + ", \n" +
 //                        String.format("Please verify your account by clicking on <a href='%s'> Link </a> ", verifyUrl));
         mailService.sendHtmlEmail(user.getEmail(),
-                "Verify Your account",user, verifyUrl, "/mail/verifyTemplate",locale);
+                "Verify Your account",user, verifyUrl, templatePath,locale);
 
     }
 
