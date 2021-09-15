@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
 //                "Hi " + user.getName() + ", \n" +
 //                        String.format("Please verify your account by clicking on <a href='%s'> Link </a> ", verifyUrl));
         mailService.sendHtmlEmail(user.getEmail(),
-                "Verify Your account",user, verifyUrl, "verifyTemplate",locale);
+                "Verify Your account",user, verifyUrl, "/mail/verifyTemplate",locale);
 
     }
 
