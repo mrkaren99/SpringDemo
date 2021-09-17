@@ -9,6 +9,8 @@ import com.example.springdemo.service.HashtagService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,8 +33,8 @@ public class BookServiceImpl implements BookService {
     private String uploadDir;
 
     @Override
-    public List<Book> findAllBooks() {
-        return bookRepository.findAll();
+    public Page<Book> findAllBooks(PageRequest pageRequest) {
+        return bookRepository.findAll(pageRequest);
     }
 
 
@@ -52,14 +54,17 @@ public class BookServiceImpl implements BookService {
             }
             book.setPicUrl(picUrl);
         }
-        var hashtagList = book.getHashtagList();
+        if(book.getHashtagList() != null && !book.getHashtagList().isEmpty()){
+            var hashtagList = book.getHashtagList();
 
-        List<Hashtag> hashtags = new ArrayList<>();
-        for (String s : hashtagList) {
-            var byName = hashtagService.findByName(s);
-            hashtags.add(byName);
+            List<Hashtag> hashtags = new ArrayList<>();
+            for (String s : hashtagList) {
+                var byName = hashtagService.findByName(s);
+                hashtags.add(byName);
+            }
+            book.setHashtags(hashtags);
+
         }
-        book.setHashtags(hashtags);
 
 
         book.setCreatedDate(new Date());

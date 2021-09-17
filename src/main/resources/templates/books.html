@@ -21,7 +21,7 @@ Books Page | <a  href="/books/add">Add book</a>
         <th>Hashtags</th>
         <th>picture</th>
     </tr>
-    <tr th:each="book : ${books}">
+    <tr th:each="book : ${books.content}">
       <td> <a th:href="@{/books/{id}(id=${book.id})}" href="#"><span th:text="${book.id}">id</span></a></td>
         <td th:text="${book.title}"></td>
         <td th:text="${book.authorName}"></td>
@@ -38,5 +38,13 @@ Books Page | <a  href="/books/add">Add book</a>
 
     </tr>
 </table>
+
+<div th:if="${books.totalPages > 0}" class="pagination"
+     th:each="pageNumber : ${pageNumbers}">
+    <a th:href="@{/books(size=${books.size}, page=${pageNumber})}"
+       th:text=${pageNumber}
+       th:class="${pageNumber==books.number + 1} ? active"></a>
+</div>
+
 </body>
 </html>
